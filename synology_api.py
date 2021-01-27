@@ -1,6 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
+import sys
 
 load_dotenv()
 
@@ -8,7 +9,6 @@ url = os.environ["SYNO_URL"]
 user = os.environ["SYNO_USER"]
 password = os.environ["SYNO_PASS"]
 
-torrent = "magnet:?xt=urn:btih:07da57688cc8bcf4a2645a20a3794fee610f3143&dn=Terminator.2.Judgment.Day.1991.DC.1080p.BluRay.x264.DTS-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce"
 
 def autheniticate_synology():
     # Authenticate and get session ID
@@ -26,6 +26,7 @@ def download_torrent(torrent_uri):
     r = requests.get(api).json()
     return r
 
+torrent = sys.argv[1]
 download_torrent(torrent)
 
 # TODO - notification about starting/ending download
