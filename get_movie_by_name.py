@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 from movie_details import Movie
 import sys
+import json
 
 load_dotenv()
 
@@ -31,4 +32,37 @@ year = get_movie_from_csfd(url)[1]
 tmdb_id = get_movie_from_tmdb_by_name(title, year)
 
 query_movie = Movie(tmdb_id)
-print(query_movie.youtube_url)
+#print(query_movie.youtube_url)
+
+json_ouput = {"items": [
+    {
+        "uid": "youtube",
+        "title": "Watch YouTube Trailer",
+        "subtitle": f"{query_movie.title} {query_movie.release_year} Trailer",
+        "arg": query_movie.youtube_url,
+        "icon": {
+            "path": "youtube.png"
+        }
+    },
+        {
+            "uid": "watchlist",
+            "title": "Add To Watchlist",
+            "subtitle": f"{query_movie.title} {query_movie.release_year}",
+            "arg": "MOVIE ID",
+            "icon": {
+                "path": "watchlist.png"
+            }
+        },
+    {
+            "uid": "torrent",
+            "title": "Get Torrent",
+            "subtitle": f"{query_movie.title} {query_movie.release_year}",
+            "arg": "MOVIE ID",
+            "icon": {
+                "path": "torrent.png"
+            }
+        }
+    ]}
+
+# Print output for Alfred Workflow
+print(json.dumps(json_ouput))
