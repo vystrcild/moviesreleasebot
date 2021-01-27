@@ -45,6 +45,7 @@ query_movie = Movie(tmdb_id)
 json_ouput = {"items": [
     {
         "uid": "youtube",
+        "variables": {"id":"youtube"},
         "title": "Watch YouTube Trailer",
         "subtitle": f"{query_movie.title} {query_movie.release_year} Trailer",
         "arg": query_movie.youtube_url,
@@ -63,9 +64,10 @@ json_ouput = {"items": [
     },
     {
         "uid": "torrent",
+        "variables": {"id":"torrent"},
         "title": "Get Torrent",
         "subtitle": f"{query_movie.title} {query_movie.release_year}",
-        "arg": "MOVIE ID",
+        "arg": f"{query_movie.title} {query_movie.release_year}",
         "icon": {
             "path": "torrent.png"
         }
