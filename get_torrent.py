@@ -1,5 +1,7 @@
 import requests
 import rarbgapi
+import json
+import sys
 # TODO: https://darksearch.io/apidoc
 
 def get_torrent_yts(query):
@@ -28,4 +30,29 @@ def get_torrent_rarbg(query):
         results.append({"name": torrent.filename, "url": torrent.download})
     return results
 
-print(get_torrent_rarbg("Soul 2020"))
+
+def get_all_torrents(query):
+    # Make a list of all torrent results
+    rarbg = get_torrent_rarbg(query)
+    yts = get_torrent_yts(query)
+    torrents = rarbg + yts
+    return torrents
+
+def create_json(torrents):
+    items = []
+    for i in torrents:
+        torrent = {
+            "title": i["name"],
+            "subtitle": i["url"],
+            "arg": i["url"]
+        }
+        items.append(torrent)
+    return {"items": items}
+
+# Get data
+query = sys.argv[1]
+torrents = get_all_torrents(query)
+json_ouput = create_json(torrents)
+
+# Print output for Alfred Workflow
+print(json.dumps(json_ouput))
