@@ -26,14 +26,18 @@ def get_movie_from_csfd(url):
     year = soup.find("p", class_="origin").find("span").get_text()
     return title, year
 
+# Script input
 url = sys.argv[1]
+
+# Get movie details from CSFD
 title = get_movie_from_csfd(url)[0]
 year = get_movie_from_csfd(url)[1]
 tmdb_id = get_movie_from_tmdb_by_name(title, year)
 
+# Create movie
 query_movie = Movie(tmdb_id)
-#print(query_movie.youtube_url)
 
+# Output for Alfred - List Script feature
 json_ouput = {"items": [
     {
         "uid": "youtube",
